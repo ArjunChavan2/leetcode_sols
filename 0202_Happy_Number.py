@@ -1,13 +1,19 @@
-class Solution:
-    def hammingWeight(self, n: int) -> int:
-        ret = 0
-        for i in range(31, -1, -1):
-            if n >= 2**i:
-                n -= 2**i
-                ret += 1
-        
-        return ret
+def s(n):
+    l = str(n)
+    n = 0
+    for c in l:
+        n += int(c) **2
+    return n
 
-# This solution runs in O(1) time complexity because the number of bits in a 32-bit integer is fixed, and the loop
-# iterates a constant number of times (32 iterations) regardless of the input value. Therefore, the overall time complexity is O(1).
-# The space complexity is also O(1) because it uses a fixed amount of extra space (the variable 'ret' and the loop variable 'i') regardless of the input size.
+class Solution:
+    def isHappy(self, n: int) -> bool:
+        if n == 1:
+            return True
+        fast = n
+        slow = s(fast)
+
+        while fast != slow != 1:
+            fast = s(fast)
+            slow = s(s(slow))
+        
+        return fast != slow
